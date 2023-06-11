@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  ###> doctrine/doctrine-bundle ###
+  database:
+    image: 'mariadb:latest'
+    container_name: database_lacitedor
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: lacitedor
+      MYSQL_PASSWORD: lacitedor
+    ports:
+      - '3306'
+    volumes:
+      - database_data:/var/lib/mysql
+  ###< doctrine/doctrine-bundle ###
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_lacitedor
+    ports:
+      - "8001:80"
+    depends_on:
+      - database
+    environment:
+      PMA_HOST: database
+
+volumes:
+  ###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
